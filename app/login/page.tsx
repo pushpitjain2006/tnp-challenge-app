@@ -12,7 +12,7 @@ export default async function LoginPage() {
   }
 
   return (
-    <div className="h-screen flex items-center justify-center bg-zinc-100">
+    <div className="h-screen flex items-center justify-center bg-zinc-100 px-4 w-full">
       <LoginForm />
     </div>
   );
