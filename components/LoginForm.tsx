@@ -1,4 +1,5 @@
 "use client"
+import { redirect } from 'next/navigation';
 import React from 'react'
 import { z } from "zod";
 
@@ -24,53 +25,52 @@ const LoginForm = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ username, password }),
-
     })
     if (res.status === 200) {
-      window.location.href = '/admin'
+     redirect('/admin');
     }
     else {
       alert('Login failed. Please check your credentials.')
     }
   }
   return (
-
-    <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-      <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
-      <form onSubmit={handleLogin} className="space-y-5">
-        <div>
-          <label className="block text-gray-700 mb-2" htmlFor="username">
-            Username:
-          </label>
-          <input
-            type="text"
-            name="username"
-            id="username"
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-        <div>
-          <label className="block text-gray-700 mb-2" htmlFor="password">
-            Password:
-          </label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors font-semibold"
-        >
-          Login
-        </button>
-      </form>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6 sm:p-8">
+        <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
+        <form onSubmit={handleLogin} className="space-y-5">
+          <div>
+            <label className="block text-gray-700 mb-2" htmlFor="username">
+              Username:
+            </label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 mb-2" htmlFor="password">
+              Password:
+            </label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors font-semibold"
+          >
+            Login
+          </button>
+        </form>
+      </div>
     </div>
-
   )
 }
 

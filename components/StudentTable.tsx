@@ -16,7 +16,7 @@ export default function StudentTable({ data }: { data: Student[] }) {
   );
 
   return (
-    <div className="mt-8 max-w-5xl mx-auto">
+    <div className="mt-8 max-w-5xl mx-auto px-2">
       <h1 className="text-3xl font-bold mb-4">Student Data</h1>
 
       <input
@@ -27,26 +27,28 @@ export default function StudentTable({ data }: { data: Student[] }) {
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      <table className="w-full border">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="p-3 border">First Name</th>
-            <th className="p-3 border">Last Name</th>
-            <th className="p-3 border">Email</th>
-            <th className="p-3 border">Roll No</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredData.map((student, idx) => (
-            <tr key={idx} className="border-t">
-              <td className="p-3">{student.first_name}</td>
-              <td className="p-3">{student.last_name}</td>
-              <td className="p-3 text-blue-600">{student.email}</td>
-              <td className="p-3">{student.roll_no}</td>
+      <div className="overflow-x-auto">
+        <table className="w-full border min-w-[600px]">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="p-3 border">First Name</th>
+              <th className="p-3 border">Last Name</th>
+              <th className="p-3 border">Email</th>
+              <th className="p-3 border">Roll No</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredData.map((student, idx) => (
+              <tr key={idx} className="border-t">
+                <td className="p-3">{student.first_name}</td>
+                <td className="p-3">{student.last_name}</td>
+                <td className="p-3 text-blue-600">{student.email}</td>
+                <td className="p-3">{student.roll_no}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
