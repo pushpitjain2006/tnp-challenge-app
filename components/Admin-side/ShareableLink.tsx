@@ -13,6 +13,7 @@ import { useShareableLink } from "@/hooks/useShareableLink";
 import { toast } from "sonner";
 import DesktopShareOptions from "@/components/Admin-side/ShareOptions";
 import { shareNative } from "./ShareNativeUtil";
+import { useState } from "react";
 
 export default function ShareableLink() {
   const {
@@ -23,10 +24,11 @@ export default function ShareableLink() {
     downloadQR,
     shareQR,
   } = useShareableLink();
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="mt-6 space-y-4">
-      <Button onClick={generateLink}>Generate Shareable Link</Button>
+      <Button onClick={() => generateLink(setIsLoading)} disabled={isLoading}>Generate Shareable Link</Button>
 
       {link && (
         <div className="space-y-2">

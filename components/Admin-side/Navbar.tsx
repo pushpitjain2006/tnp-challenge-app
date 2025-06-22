@@ -6,7 +6,7 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { LogOut, LucideLogOut, Menu } from "lucide-react";
+import { LogOut, Menu } from "lucide-react";
 import { redirect } from "next/navigation";
 
 export default function Navbar() {

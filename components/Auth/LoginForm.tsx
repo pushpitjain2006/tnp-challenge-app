@@ -16,7 +16,7 @@ const LOGIN_SCHEMA = z.object({
 });
 
 const LoginForm = () => {
-
+  const [disabled, setDisabled] = useState(false);
   const [formData, setFormData] = useState({ username: "", password: "" });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,9 +25,11 @@ const LoginForm = () => {
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
+    setDisabled(true);
     const result = LOGIN_SCHEMA.safeParse(formData);
     if (!result.success) {
       toast.error(result.error.errors.map((e) => e.message).join("\n"));
+      setDisabled(false);
       return;
     }
 
@@ -43,6 +45,8 @@ const LoginForm = () => {
     } else {
       toast.error("Login failed. Please check your credentials.");
     }
+    setDisabled(false);
+    setFormData({ username: "", password: "" });
   };
 
   return (
@@ -62,7 +66,7 @@ const LoginForm = () => {
             <Input type="password" id="password" name="password" required onChange={handleChange} />
           </div>
 
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full" disabled={disabled}>
             Login
           </Button>
         </form>

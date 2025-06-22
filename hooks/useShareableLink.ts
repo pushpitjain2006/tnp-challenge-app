@@ -12,7 +12,8 @@ export function useShareableLink() {
         setIsMobile(/Mobi|Android/i.test(navigator.userAgent));
     }, []);
 
-    const generateLink = useCallback(async () => {
+    const generateLink = useCallback(async (setIsLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
+        setIsLoading(true);
         try {
             const res = await fetch("/api/generate", {
                 method: "POST",
@@ -30,6 +31,8 @@ export function useShareableLink() {
             toast.success("Link generated");
         } catch (err) {
             toast.error("Network error while generating link");
+        } finally {
+            setIsLoading(false);
         }
     }, []);
 
