@@ -1,5 +1,5 @@
 "use server"
-import LoginForm from "@/components/LoginForm";
+import LoginForm from "@/components/Auth/LoginForm";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -12,7 +12,7 @@ export default async function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
+    <div className="h-screen flex items-center justify-center bg-zinc-100">
       <LoginForm />
     </div>
   );

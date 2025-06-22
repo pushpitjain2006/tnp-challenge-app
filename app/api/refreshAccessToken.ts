@@ -7,7 +7,11 @@ export async function refreshAccessToken() {
     if (!refreshToken) {
         return new Response("Unauthorized", { status: 401 });
     }
-    const REFRESH_URL = "https://tnp-recruitment-challenge.manitvig.live/refresh";
+    const TNP_API_SITE = process.env.TNP_API_SITE;
+    if (!TNP_API_SITE) {
+        return new Response("TNP_API_SITE environment variable is not set", { status: 500 });
+    }
+    const REFRESH_URL = `${TNP_API_SITE}/refresh`;
     const res = await fetch(REFRESH_URL, {
         method: "POST",
         headers: {

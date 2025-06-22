@@ -1,12 +1,8 @@
 import { cookies } from "next/headers";
-import { setCookies } from "../setCookies";
 import { refreshAccessToken } from "../refreshAccessToken";
 import("next/headers");
 
-// Define the SHARE_URL constant with the appropriate URL
-// Define the REFRESH_URL constant with the appropriate URL
-
-export async function POST() {
+async function validateAccessToken() {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("accessToken")?.value;
     const refreshToken = cookieStore.get("refreshToken")?.value;
@@ -14,23 +10,37 @@ export async function POST() {
         return new Response("Unauthorized", { status: 401 });
     }
     if (!accessToken) {
-        await refreshAccessToken();
-        if (!cookieStore.get("accessToken")?.value) {
-            return new Response("Unauthorized", { status: 401 });
-        }
+        const refreshAccessTokenRes = await refreshAccessToken();
+        return refreshAccessTokenRes;
+    }
+    return new Response("Access token is valid", { status: 200 });
+}
+
+export async function POST() {
+    const validateAccessTokenRes = await validateAccessToken();
+    if (validateAccessTokenRes?.status !== 200) {
+        return validateAccessTokenRes;
     }
 
-    const SHARE_URL = "https://tnp-recruitment-challenge.manitvig.live/share";
+    const TNP_API_SITE = process.env.TNP_API_SITE;
+    if (!TNP_API_SITE) {
+        return new Response("TNP_API_SITE environment variable is not set", { status: 500 });
+    }
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("accessToken")?.value;
+    const SHARE_URL = `${TNP_API_SITE}/share`;
     const res = await fetch(SHARE_URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${cookieStore.get("accessToken")?.value}`,
+            Authorization: `Bearer ${accessToken}`,
         },
     });
+
     if (res.status !== 200) {
         return new Response("Failed to share", { status: res.status });
     }
+
     const data = await res.json();
     const shareToken = data.shareToken;
     return new Response(JSON.stringify({ shareToken }), {

@@ -1,17 +1,14 @@
-import ShareableLink from '@/components/ShareableLink'
-import Navbar from '@/components/Navbar'
+import Navbar from "@/components/Admin-side/Navbar";
+import ShareableLink from "@/components/Admin-side/ShareableLink";
 
 export default function AdminPanel() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-zinc-50">
       <Navbar />
-      <section className="flex-1 w-full max-w-3xl mx-auto mt-8 px-4 sm:mt-12">
-        <h1 className="text-2xl sm:text-4xl font-bold">Admin Panel</h1>
-        <p className="text-gray-500 mt-2 text-base sm:text-lg">
-          Manage student data and generate shareable links.
-        </p>
+      <section className="flex-1 w-full max-w-3xl mx-auto mt-10 px-4">
+        <h1 className="text-3xl font-bold text-zinc-800">Admin Panel</h1>
         <ShareableLink />
       </section>
     </div>
-  )
+  );
 }
