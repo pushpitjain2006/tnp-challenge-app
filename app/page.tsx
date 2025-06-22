@@ -1,13 +1,14 @@
-"use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+"use server"
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  const router = useRouter();
+export default async function HomePage() {
+  const cookiesList = await cookies();
+  const accessToken = cookiesList.get("accessToken")?.value;
 
-  useEffect(() => {
-    router.replace("/login");
-  }, [router]);
-
-  return null;
+  if (accessToken) {
+    redirect("/admin");
+  } else {
+    redirect("/login");
+  }
 }

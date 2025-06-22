@@ -1,43 +1,19 @@
-"use client"
-import React from 'react'
+"use server"
+import LoginForm from "@/components/LoginForm";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-const page = () => {
-    const handleLogin = async (event: React.FormEvent) => {
-    event.preventDefault()
-    const form = event.target as HTMLFormElement
-    const username = form.username.value
-    const password = form.password.value
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password }),
+export default async function LoginPage() {
+  const cookiesStore = await cookies();
+  const accessToken = cookiesStore.get("accessToken")?.value;
 
-    })
-    if(res.status === 200) {
-      window.location.href = '/admin'
-    }
-    else {
-      alert('Login failed. Please check your credentials.')
-    }
+  if (accessToken) {
+    redirect("/admin");
   }
-  return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleLogin}>
-        <label>
-          Username:
-          <input type="text" name="username" required />
-        </label>
-        <label>
-          Password:
-          <input type="password" name="password" required />
-        </label>
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  )
-}
 
-export default page
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-gray-100">
+      <LoginForm />
+    </div>
+  );
+}
