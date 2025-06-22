@@ -9,9 +9,10 @@ import {
 } from "@/components/ui/popover";
 import { QRCodeCanvas } from "qrcode.react";
 import { Share2, Download, ClipboardCopy, ExternalLinkIcon } from "lucide-react";
-import ShareOptions from "@/components/Admin-side/ShareOptions";
 import { useShareableLink } from "@/hooks/useShareableLink";
 import { toast } from "sonner";
+import DesktopShareOptions from "@/components/Admin-side/ShareOptions";
+import { shareNative } from "./ShareNativeUtil";
 
 export default function ShareableLink() {
   const {
@@ -44,15 +45,28 @@ export default function ShareableLink() {
                 </Button>
               </PopoverTrigger>
               <PopoverContent align="end" className="w-52 p-2">
-                <ShareOptions
-                  link={link}
-                  isMobile={isMobile}
-                />
+                {isMobile && (
+                  <div className="flex flex-col gap-2">
+                    <Button
+                      variant="outline"
+                      className="flex justify-start gap-2"
+                      onClick={() => shareNative(link)}
+                    >
+                      <Share2 size={16} />
+                      Share Link
+                    </Button>
+                  </div>
+                )}
+                {!isMobile && (
+                  <DesktopShareOptions
+                    link={link}
+                  />
+                )}
               </PopoverContent>
             </Popover>
             <Button
-            variant="ghost"
-              onClick={() => {navigator.clipboard.writeText(link); toast.success("Link copied to clipboard");}}
+              variant="ghost"
+              onClick={() => { navigator.clipboard.writeText(link); toast.success("Link copied to clipboard"); }}
               aria-label="Copy link to clipboard"
             >
               <ClipboardCopy size={16} />

@@ -1,42 +1,9 @@
 import { Mail, MessageSquareText, Share2 } from "lucide-react";
 import { Button } from "../ui/button";
+import { shareNative } from "./ShareNativeUtil";
 
-type ShareOptionsProps = {
-    link: string;
-    isMobile: boolean;
-};
 
-export default function ShareOptions({ link, isMobile }: ShareOptionsProps) {
-    const shareNative = async () => {
-        if (!navigator.share) return;
-
-        try {
-            await navigator.share({
-                title: "Shared Link",
-                text: "View the shared student data:",
-                url: link,
-            });
-        } catch (err) {
-            console.error("Native share cancelled or failed", err);
-        }
-    };
-
-    if (isMobile) {
-        return (
-            <div className="flex flex-col gap-2">
-                <Button
-                    variant="outline"
-                    className="flex justify-start gap-2"
-                    onClick={shareNative}
-                >
-                    <Share2 size={16} />
-                    Share Link
-                </Button>
-            </div>
-        );
-    }
-
-    // Fallback for desktop
+export default function DesktopShareOptions({ link }: { link: string }) {
     return (
         <div className="flex flex-col gap-2">
             <Button
@@ -62,7 +29,7 @@ export default function ShareOptions({ link, isMobile }: ShareOptionsProps) {
             {/* Other share options , navigator.share */}
             <Button
                 variant="outline"
-                onClick={async () => { try { await shareNative(); } catch (error) { } }}
+                onClick={async () => { try { await shareNative(link); } catch (error) { } }}
                 className="flex justify-start gap-2"
             >
                 <Share2 size={16} />

@@ -45,8 +45,8 @@ export default function Navbar() {
                 {/* public/DTU Delhi Logo.png */}
                 <div className="flex items-center justify-center mb-4">
                   <img
-                    src="/DTU Delhi Logo.png"
-                    alt="DTU Logo"
+                    src="/favicon.png"
+                    alt="Favicon"
                     className="h-20 w-auto"
                   />
                 </div>
