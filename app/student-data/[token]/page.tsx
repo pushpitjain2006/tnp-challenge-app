@@ -1,15 +1,7 @@
-// app/student-data/[token]/page.tsx
 import StudentTable from "@/components/StudentTable";
 import { notFound } from "next/navigation";
 
-interface SharePageProps {
-  params: {
-    token: string;
-  };
-}
-
-export default async function SharePage({ params }: SharePageProps) {
-  const { token } = params;
+export default async function SharePage({ params: { token } }: any) {
 
     if (!token) {
         return notFound();
