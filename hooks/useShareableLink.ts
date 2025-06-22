@@ -62,7 +62,7 @@ export function useShareableLink() {
                     files: [file],
                 });
             } catch {
-                toast("Share cancelled");
+                console.log("Share cancelled");
             }
         } else {
             window.open(`https://wa.me/?text=${encodeURIComponent(link)}`, "_blank");
